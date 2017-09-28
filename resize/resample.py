@@ -1,3 +1,5 @@
+import cv2
+import numpy as np
 class resample:
 
     def resize(self, image, fx = None, fy = None, interpolation = None):
@@ -25,7 +27,16 @@ class resample:
 
         #Write your code for nearest neighbor interpolation here
 
-        return image
+        [h, w] = image.shape
+
+        blank_image = np.zeros((int(fx * h), int(fy * w)))
+        print(blank_image.shape)
+        for row in range(int(fx * h)):
+            for col in range(int(fy * w)):
+                new_row = round((row - 1) * (h - 1) / int((fx * h - 1)) + 1)
+                new_col = round((col - 1) * (w - 1) / int((fy * w - 1)) + 1)
+                blank_image[row, col] = image[new_row - 1, new_col - 1]
+        return blank_image
 
 
     def bilinear_interpolation(self, image, fx, fy):
