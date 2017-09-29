@@ -9,7 +9,9 @@ class binary_image:
         returns a histogram"""
 
         hist = [0]*256
-
+        img = cv2.imread('cell2.jpg')
+        img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        [h, w] = img_gray.shape
 
         return hist
 
