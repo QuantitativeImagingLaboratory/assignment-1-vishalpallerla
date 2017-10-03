@@ -9,12 +9,12 @@ img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 [h, w] = img_gray.shape
 i=0
 threshold = 0
-while i<256:
-    for row in range(h-1):
-        for col in range(w-1):
-            if img_gray[row,col] == i:
-                hist[i] += 1
-    i+=1
+for i in range(255):
+    for j in range(h-1):
+        for k in range(w-1):
+            if img_gray[j,k] == i:
+                hist[i] = hist[i]+1
+
 print(hist)
 
 for i in range(255):
@@ -36,8 +36,8 @@ for row in range(h-1):
 
 R = np.zeros((h,w))
 region_counter = 1
-for row in range(h-1):
-    for col in range(w-1):
+for row in range(h):
+    for col in range(w):
         if img_gray[row,col] == 0 and img_gray[row,col - 1] == 255 and img_gray[row - 1,col] == 255:
             R[row,col] = region_counter
             region_counter = region_counter + 1
@@ -48,9 +48,16 @@ for row in range(h-1):
         if img_gray[row,col] == 0 and img_gray[row,col - 1] == 0 and img_gray[row - 1,col] == 0:
             R[row,col] = R[row - 1,col]
 
+detector = cv2.SimpleBlobDetector_create()
+params = cv2.SimpleBlobDetector_Params()
+params.filterByArea = True
+params.minArea = 20
+params.maxArea = 40000
 
-[v,ind] = max(R.all())
-[v1,ind1] = max(max(R.all()))
-
-print(v1)
+# Filter by Circularity
+params.filterByCircularity = True
+params.minCircularity = 0.5
+detector = cv2.SimpleBlobDetector_create(params)
+keypoints = detector.detect(img_gray)
+print(keypoints)
 

@@ -8,7 +8,7 @@ img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 [h,w] = img_gray.shape
 print(h,w)
 
-scale = [2,2]
+scale = [1,1]
 
 blank_image = np.zeros((int(scale[0]*h),int(scale[1]*w)))
 print(blank_image.shape)

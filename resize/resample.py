@@ -26,16 +26,26 @@ class resample:
         """
 
         #Write your code for nearest neighbor interpolation here
-
         [h, w] = image.shape
+        #print(h, w)
 
-        blank_image = np.zeros((int(fx * h), int(fy * w)))
-        print(blank_image.shape)
-        for row in range(int(fx * h)):
-            for col in range(int(fy * w)):
-                new_row = round((row - 1) * (h - 1) / int((fx * h - 1)) + 1)
-                new_col = round((col - 1) * (w - 1) / int((fy * w - 1)) + 1)
+        x = float(fx)
+        h_rs = int(x * h)
+
+        y = float(fy)
+        w_rs = int(y * w)
+
+        blank_image = np.zeros((h_rs, w_rs))
+        #print(blank_image.shape)
+
+        for row in range(h_rs):
+            for col in range(w_rs):
+                # blank_image[int(col/0.5),int(row/0.5)] = blank_image[col,row]
+                new_row = round((row - 1) * (h - 1) / h_rs)
+                new_col = round((col - 1) * (w - 1) / w_rs)
+
                 blank_image[row, col] = image[new_row - 1, new_col - 1]
+
         return blank_image
 
 
@@ -48,6 +58,7 @@ class resample:
         """
 
         # Write your code for bilinear interpolation here
+
 
         return image
 
