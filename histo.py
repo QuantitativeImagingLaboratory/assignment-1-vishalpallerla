@@ -61,3 +61,14 @@ detector = cv2.SimpleBlobDetector_create(params)
 keypoints = detector.detect(img_gray)
 print(keypoints)
 
+if image[row, col] == 0 and image[row, col - 1] == 255 and image[row - 1, col] == 255:
+    R[row, col] = region_counter
+    region_counter = region_counter + 1
+if image[row, col] == 0 and image[row, col - 1] == 255 and image[row - 1, col] == 0:
+    R[row, col] = R[row - 1, col]
+if image[row, col] == 0 and image[row, col - 1] == 0 and image[row - 1, col] == 255:
+    R[row, col] = R[row, col - 1]
+if image[row, col] == 0 and image[row, col - 1] == 0 and image[row - 1, col] == 0:
+    R[row, col] = R[row - 1, col]
+if R[row, col - 1] != R[row - 1, col]:
+    R[row, col - 1] = R[row - 1, col]

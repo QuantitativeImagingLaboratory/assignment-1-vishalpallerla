@@ -12,6 +12,7 @@ class cell_counting:
 
         regions = dict()
         R = np.zeros((h, w))
+        #I = image.copy()
         region_counter = 1
         for row in range(h):
             for col in range(w):
@@ -23,38 +24,49 @@ class cell_counting:
                 if image[row, col] == 0 and image[row, col - 1] == 0 and image[row - 1, col] == 255:
                     R[row, col] = R[row, col - 1]
                 if image[row, col] == 0 and image[row, col - 1] == 0 and image[row - 1, col] == 0:
+                    t = R[row, col]
                     R[row, col] = R[row - 1, col]
-                if image[row,col - 1] != image[row - 1, col]:
-                    R[row, col-1] == R[row - 1,col]
+                    if R[row, col - 1] != R[row - 1, col]:
+                        R[row, col - 1] = R[row - 1, col]
+                        #if image[row, col -1] == image[row -1, col]:
+                    #R[row, col] = region_counter
+                    #R[row, col] = region_counter
         print(region_counter)
         for obj in range(1,region_counter):
-            #regions[obj] = []
+            regions[obj] = []
+            #if len(R[obj])>15:
             for row in range(h):
                 for col in range(w):
                     if R[row,col] == obj:
-                        if not obj in regions:
-                            regions[obj] = [(row, col)]
-                        else:
-                            regions[obj].append((row, col))
-        #print(regions)
+                        regions[obj].append((row,col))
+                        # if not obj in regions:
+                        #     regions[obj] = [(row, col)]
+                        # else:
+                        #     regions[obj].append((row, col))
+        print(regions)
         return regions
 
+
+
+
     def compute_statistics(self, region):
-        """Compute cell statistics area and location
-        takes as input
-        region: a list of pixels in a region
-        returns: area"""
+    #     """Compute cell statistics area and location
+    #     takes as input
+    #     region: a list of pixels in a region
+    #     returns: area"""
+    #
+    #
+    #
+    #     # Please print your region statistics to stdout
+    #     # <region number>: <location or center>, <area>
+    #     # print(stats)
+    #     region_count = region.copy()
+    #     for key,value in region.items():
+    #         #print(key, len([item for item in value if item]))
+    #         region_count[key] = len([item for item in value if item])
+    #     print(region_count)
+     return 0
 
-
-
-        # Please print your region statistics to stdout
-        # <region number>: <location or center>, <area>
-        # print(stats)
-        #for i in range(len(region)):
-        
-
-
-        return 0
 
     def mark_regions_image(self, image, stats):
         """Creates a new image with computed stats
