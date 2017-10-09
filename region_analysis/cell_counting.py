@@ -28,12 +28,12 @@ class cell_counting:
                         R[row, col] = R[row-1, col]
                         if R[row, col - 1] != R[row-1, col]:
                             R[row, col - 1] = R[row-1, col]
-        for i in range(0, h):
-            for j in range(0, w):
-                if R[i, j] in regions.keys():
-                    regions[R[i, j]].append([i, j])
+        for row in range(h):
+            for col in range(w):
+                if R[row, col] in regions.keys():
+                    regions[R[row, col]].append([row, col])
                 else:
-                    regions[int(R[i, j])] = [[i, j]]
+                    regions[int(R[row, col])] = [[row, col]]
 
         print(regions)
 
@@ -74,9 +74,6 @@ class cell_counting:
         return reg_copy
 
 
-
-
-
     def mark_regions_image(self, image, stats):
         """Creates a new image with computed stats
         takes as input
@@ -84,10 +81,11 @@ class cell_counting:
         stats: stats regarding location and area
         returns: image marked with center and area"""
         for key, value in stats.items():
-            msg = "*" +str(key)+ ","+str(value[1])
-            pixel = (value[0][1], value[0][0])
+            print_txt = "*" + str(key) + "," + str(value[1])
+            centre = (value[0][1], value[0][0])
             font = cv2.FONT_HERSHEY_SIMPLEX
-            cv2.putText(image, msg, pixel, font, 0.2, (255, 255, 255), 1, cv2.LINE_AA)
+            cv2.putText(image, print_txt, centre, font, 0.2, (127, 0, 0), 1, cv2.LINE_AA)
+
 
         return image
 
