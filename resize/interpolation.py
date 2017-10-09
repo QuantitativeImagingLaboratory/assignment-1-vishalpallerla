@@ -10,15 +10,7 @@ class interpolation:
 
         #Write your code for linear interpolation here
         # Write your code for linear interpolation here
-        x1 = pt1[0]
-        y1 = pt1[1]
-        i1 = pt1[2]
-        x2 = pt2[0]
-        y2 = pt2[1]
-        i2 = pt2[2]
-        x3 = unknown[0]
-        y3 = unknown[1]
-        i3 = unknown[2]
+
         if unknown[0] == pt1[0]:
             return pt1[2]
         elif unknown[0] == pt2[0]:
@@ -39,5 +31,12 @@ class interpolation:
 
         # Write your code for bilinear interpolation here
         # May be you can reuse or call linear interpolatio method to compute this task
+        bl1 = [unknown[0], pt1[1]]
+        res1 = self.linear_interpolation(self, pt1, pt2, unknown)
+        bl1.append(res1)
+        bl2 = [unknown[0], pt3[1]]
+        res2 = self.linear_interpolation(self, pt3, pt4, unknown)
+        bl2.append(res2)
+        bl = self.linear_interpolation(self, bl1, bl2, unknown)
 
-        return 0
+        return bl

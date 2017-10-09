@@ -25,38 +25,35 @@ class binary_image:
         return hist
 
     def find_optimal_threshold(self, hist):
+
         """analyses a histogram it to find the optimal threshold value assuming a bimodal histogram
         takes as input
         hist: a bimodal histogram
         returns: an optimal threshold value"""
 
-        threshold = int(len(hist)/2)
-        tot_int = 0
-        threshold1  = 0
-        threshold2 = 0
-        for c in range(256):
-            tot_int += hist[c]
-        print(tot_int)
-        # for i in range(256):
-        #     if i < threshold:
-        #         threshold1 += (i) * (hist[i] / tot_int)
-        #     elif i >= threshold:
-        #         threshold2 += (i) *  (hist[i] / tot_int)
-        # threshold = (threshold1 + threshold2)/2
+
+        threshold = int((len(hist)-1)/2)
+        ct = len(hist) - 1
 
         while True:
-            for i in range(256):
-                if i < threshold:
-                    threshold1 += (i) * (hist[i] / tot_int)
-                elif i >= threshold:
-                    threshold2 += (i) * (hist[i] / tot_int)
-                threshold = (threshold1 + threshold2) / 2
-            if threshold - threshold1 != 0 and threshold2 - threshold != 0:
+            if(ct < 1):
                 break
+            threshold1 = self.evalue(hist,0,threshold)
+            threshold2 = self.evalue(hist,threshold,len(hist) - 2)
+            nt = int((threshold1+threshold2)/2)
+            ct = nt - threshold
+            threshold = nt
+
         return threshold
 
-
-
+    def evalue(self,hist,lval,rval):
+        tot_int = 0
+        final_int = 0
+        for row in range(lval,rval):
+            tot_int += hist[row]
+        for col in range(lval,rval):
+            final_int += col*(hist[col]/tot_int)
+        return final_int
 
 
     def binarize(self, image, threshold):
@@ -76,7 +73,9 @@ class binary_image:
                 else: #less than threshold black(general)
                     bin_img[row, col] = 0 #0 instead of 1
 
-        print(bin_img)
+
+                    #reverse the cases
+
         return bin_img
 
 
